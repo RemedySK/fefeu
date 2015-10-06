@@ -34,7 +34,7 @@ main(){
       1)escolha1_f1;;
       2)escolha2_f1;;
       3)main;;
-      *)echo "Comando inválido"; read; funcao1;;
+      *)echo "Comando Inválido"; read; funcao1;;
       esac
    }
 
