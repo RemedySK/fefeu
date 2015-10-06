@@ -1,1 +1,139 @@
+#!/bin/bash
 
+#v0.2 Simplificado
+
+#Se a sua função tiver apenas 1 escolha,
+#Faça seu codigo dentro de funcaoX() { Seu código }.
+#O conteúdo dentro dela pode ser deletado.
+
+#Caso sua função possua mais de 1 escolha. Ex: Descompactar e Compactar,
+#Utilize as areas escolhaX_fX() { Seu código }.
+#Renomeie os botões com suas respectivas funções ( Acrescentar mais caso necessário ).
+
+main(){
+
+   funcao1(){
+      escolha1_f1(){
+         clear
+         echo "Função em Criação es1 f1"; read; funcao1;
+      }
+      escolha2_f1(){
+         clear
+         echo "Função em Criação es2 f1"; read; funcao1;
+      }
+      clear
+      echo "1. Primeira Escolha"
+      echo "2. Segunda Escolha"
+      echo "3. Voltar"
+      echo
+
+      echo -n "Escolha uma Opção: "
+      read escolha
+
+      case $escolha in
+      1)escolha1_f1;;
+      2)escolha2_f1;;
+      3)main;;
+      *)echo "Comando inválido"; read; funcao1;;
+      esac
+   }
+
+   funcao2(){
+      escolha1_f2(){
+         clear
+         echo "Função em Criação es1 f2"; read; funcao2;
+      }
+      escolha2_f2(){
+         clear
+         echo "Função em Criação es2 f2"; read; funcao2;
+      }
+      clear
+      echo "1. Primeira Escolha"
+      echo "2. Segunda Escolha"
+      echo "3. Voltar"
+      echo
+
+      echo -n "Escolha uma Opção: "
+      read escolha
+
+      case $escolha in
+      1)escolha1_f2;;
+      2)escolha2_f2;;
+      3)main;;
+      *)echo "Comando Inválido"; read; funcao2;;
+      esac
+   }
+
+   funcao3(){
+      escolha1_f3(){
+         clear
+         echo "Função em Criação es1 f3"; read; funcao3;
+      }
+      escolha2_f3(){
+         clear
+         echo "Função em Criação es2 f3"; read; funcao3;
+      }
+      clear
+      echo "1. Primeira Escolha"
+      echo "2. Segunda Escolha"
+      echo "3. Voltar"
+      echo
+
+      echo -n "Escolha uma Opção: "
+      read escolha
+
+      case $escolha in
+      1)escolha1_f3;;
+      2)escolha2_f3;;
+      3)main;;
+      *)echo "Comando Inválido"; read; funcao3;;
+      esac
+   }
+
+   funcao4(){
+      escolha1_f4(){
+         clear
+         echo "Função em Criação es1 f4"; read; funcao4;
+      }
+      escolha2_f4(){
+         clear
+         echo "Função em Criação es2 f4"; read; funcao4;
+      }
+      clear
+      echo "1. Primeira Escolha"
+      echo "2. Segunda Escolha"
+      echo "3. Voltar"
+      echo
+
+      echo -n "Escolha uma Opção: "
+      read escolha
+
+      case $escolha in
+      1)escolha1_f4;;
+      2)escolha2_f4;;
+      3)main;;
+      *)echo "Comando Inválido"; read; funcao4;;
+      esac
+   }
+
+   clear
+   echo "1. Primeira Função"
+   echo "2. Segunda Função"
+   echo "3. Terceira Função"
+   echo "4. Quarta Função"
+   echo "5. Encerrar o Script"
+   echo
+
+   echo -n "Escolha uma opção: "
+   read opcao
+
+   case $opcao in
+   1) funcao1;;
+   2) funcao2;;
+   3) funcao3;;
+   4) funcao4;;
+   5) return;;
+   *) echo "Comando Inválido"; read; main;;
+   esac
+}
+main
