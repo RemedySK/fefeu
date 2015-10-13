@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#v0.2 Com Interface
+#v0.3.7 Com Interface
 
 #Se a sua função tiver apenas 1 escolha,
 #Faça seu codigo dentro de funcaoX() { Seu código }.
@@ -32,17 +32,20 @@ main(){
       echo "#   2. Segunda Escolha                                                #"
       echo "#   3. Voltar                                                         #"
       echo "#                                                                     #"
-      echo "#######################################################################"
+      echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
+      echo "#######################################################################"
 
-      echo -n "# Escolha uma Opção: "
-      read escolha
+      tput cup 10 23
+      echo -e "\c"
+
+      read -n10 escolha
 
       case $escolha in
       1)escolha1_f1;;
       2)escolha2_f1;;
       3)main;;
-      *)echo "# Comando inválido"; read; funcao1;;
+      *)echo "#                         *Comando Inválido*"; read; funcao1;;
       esac
    }
 
@@ -66,17 +69,20 @@ main(){
       echo "#   2. Segunda Escolha                                                #"
       echo "#   3. Voltar                                                         #"
       echo "#                                                                     #"
-      echo "#######################################################################"
+      echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
+      echo "#######################################################################"
 
-      echo -n "# Escolha uma Opção: "
-      read escolha
+      tput cup 10 23
+      echo -e "\c"
+
+      read -n10 escolha
 
       case $escolha in
       1)escolha1_f2;;
       2)escolha2_f2;;
       3)main;;
-      *)echo "# Comando Inválido"; read; funcao2;;
+      *)echo "#                         *Comando Inválido*"; read; funcao2;;
       esac
    }
 
@@ -100,17 +106,20 @@ main(){
       echo "#   2. Segunda Escolha                                                #"
       echo "#   3. Voltar                                                         #"
       echo "#                                                                     #"
-      echo "#######################################################################"
+      echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
+      echo "#######################################################################"
 
-      echo -n "# Escolha uma Opção: "
-      read escolha
+      tput cup 10 23
+      echo -e "\c"
+
+      read -n10 escolha
 
       case $escolha in
       1)escolha1_f3;;
       2)escolha2_f3;;
       3)main;;
-      *)echo "# Comando Inválido"; read; funcao3;;
+      *)echo "#                         *Comando Inválido*"; read; funcao3;;
       esac
    }
 
@@ -134,17 +143,20 @@ main(){
       echo "#   2. Segunda Escolha                                                #"
       echo "#   3. Voltar                                                         #"
       echo "#                                                                     #"
-      echo "#######################################################################"
+      echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
+      echo "#######################################################################"
 
-      echo -n "# Escolha uma Opção: "
-      read escolha
+      tput cup 10 23
+      echo -e "\c"
+
+      read -n10 escolha
 
       case $escolha in
       1)escolha1_f4;;
       2)escolha2_f4;;
       3)main;;
-      *)echo "# Comando Inválido"; read; funcao4;;
+      *)echo "#                         *Comando Inválido*"; read; funcao4;;
       esac
    }
 
@@ -171,19 +183,24 @@ main(){
    echo "#        4) Função 4                                                  #"
    echo "#        5) Finalizar o script                                        #"
    echo "#                                                                     #"
+   echo "#        Escolha uma opção:                                           #"
+   echo "#                                                                     #"  
    echo "#######################################################################"
-   echo "#                                                                     #"
 
-   echo -n "# Escolha uma opção: "
-   read opcao;   
+   tput cup 21 26
+   echo -e "\c"
 
+   read -n10 opcao
+
+   trap "clear" EXIT
+   
    case $opcao in
    1) funcao1;;
    2) funcao2;;
    3) funcao3;;
    4) funcao4;;
    5) return;;
-   *) echo "# Comando Inválido"; read; main;;
+   *) echo "#                         *Comando Inválido*"; read; main;;
    esac
 }
 main
