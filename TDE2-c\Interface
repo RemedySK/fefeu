@@ -187,11 +187,18 @@ main(){
    echo "#                                                                     #"  
    echo "#######################################################################"
 
+#tput cup posiociona o ponteiro(area da digitação) na posição de X,Y 
+#X= Linha | Y= Coluna
    tput cup 21 26
+   
+#parametro -e permite o uso de comandos com a barra inversa
+#\c serve para sobrescrever. ele irá sobrescrever a partir da area com espaço em branco na posição 21,26
    echo -e "\c"
 
+#-n<Numero> ele irá ler opção e aceitar até no maximo 10 caracteres
    read -n10 opcao
 
+#Quando o usuario finalizar o script ele irá limpar a tela
    trap "clear" EXIT
    
    case $opcao in
