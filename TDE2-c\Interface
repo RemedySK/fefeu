@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#v0.3.7 Com Interface
+#v0.5.1 Com Interface
 
 #Se a sua função tiver apenas 1 escolha,
 #Faça seu codigo dentro de funcaoX() { Seu código }.
@@ -13,23 +13,158 @@
 main(){
 
    funcao1(){
-      escolha1_f1(){
-         clear
-         echo "Função em Criação es1 f1"; read; funcao1;
-      }
+      escolha1_f1(){         
+         comp_tar(){
+            clear
+            echo "###############################################################"
+            echo "#                                                             #"
+            echo "#   Digite onde está localizado o arquivo (Ex: /home/usuario) #"
+            echo "#                                                             #"
+            echo "#                                                             #"
+            echo "#   Digite o nome do arquivo                                  #"
+            echo "#                                                             #"
+            echo "#                                                             #"
+            echo "###############################################################" 
+      
+           tput cup 3 4
+           read endereco
+
+           tput cup 6 4
+           read arqnome
+           
+           cd $endereco 2> log_tde
+
+           tar -cf $arqnome.tar $arqnome 2> log_tde
+
+           if [ $? == 0 ]; then
+              tput cup 7 0
+              echo "#                     *Arquivo compactado*"
+              sleep 3 ; funcao1
+           else
+              tput cup 7 0
+              echo "#               *Erro! Arquivo não foi compactado*"
+              rm $arqnome.tar 2> log_tde
+              sleep 3 ; funcao1
+           fi
+           main
+         }
+
+         comp_gz(){
+         echo
+         }
+
+         comp_bz2(){
+         echo
+         }
+
+            clear
+            echo "#######################################################################"
+            echo "#                                                                     #"
+            echo "#                        Compactação de Arquivos                      #"
+            echo "#                                                                     #"
+            echo "#---------------------------------------------------------------------#"
+            echo "#                                                                     #"
+            echo "#   1. Compactar com .tar                                             #"
+            echo "#   2. Compactar e Comprimir com .tar.gz                              #"
+            echo "#   3. Compactar e Comprimir com .tar.bz2                             #"
+            echo "#   4. Voltar                                                         #"
+            echo "#                                                                     #"
+            echo "#   Escolha uma Opção:                                               #"
+            echo "#                                                                     #"
+            echo "#######################################################################"
+       
+            tput cup 11 23
+            read -n 10 escolha
+
+            case $escolha in
+            1) comp_tar;;
+            2) comp_gz;;
+            3) comp_bz2;;
+            4) funcao1;;
+            *) tput cup 12 0; echo "#                        *Comando Inválido*"; read -n 1; escolha1_f1;;
+            esac
+         }
+
       escolha2_f1(){
-         clear
-         echo "Função em Criação es2 f1"; read; funcao1;
-      }
+         desc_tar(){
+            clear
+            echo "###############################################################"
+            echo "#                                                             #"
+            echo "#   Digite onde está localizado o arquivo (Ex: /home/usuario) #"
+            echo "#                                                             #"
+            echo "#                                                             #"
+            echo "#   Digite o nome do arquivo ( Ex: arquivo.tar )              #"
+            echo "#                                                             #"
+            echo "#                                                             #"
+            echo "###############################################################" 
+            
+            tput cup 3 4
+            read endereco
+            
+            tput cup 6 4
+            read arqnome
+
+            cd $endereco 2> log_tde
+               
+            tar -xf $arqnome 2> log_tde
+
+            if [ $? -eq 0 ]; then
+               tput cup 7 0
+               echo "#                     *Arquivo descompactado*"
+               sleep 3 ; funcao1
+            else
+               tput cup 7 0
+               echo "#               *Erro! arquivo não foi descompactado*"
+               sleep 3 ; funcao1
+            fi
+            main
+         }
+
+         desc_gz(){
+         echo
+         }
+
+         desc_bz2(){
+         echo
+         }
+
       clear
       echo "#######################################################################"
       echo "#                                                                     #"
-      echo "#                    Você está na tela da Função 1                    #"
+      echo "#                       Descompactação de Arquivos                    #"
       echo "#                                                                     #"
       echo "#---------------------------------------------------------------------#"
       echo "#                                                                     #"
-      echo "#   1. Primeira Escolha                                               #"
-      echo "#   2. Segunda Escolha                                                #"
+      echo "#   1. Descompactar arquivos .tar                                     #"
+      echo "#   2. Descompactar e Descomprimir arquivos .tar.gz                   #"
+      echo "#   3. Descompactar e Descomprimir arquivos .tar.bz2                  #"
+      echo "#   4. Voltar                                                         #"
+      echo "#                                                                     #"
+      echo "#   Escolha uma Opção:                                                #"
+      echo "#                                                                     #"
+      echo "#######################################################################"
+       
+      tput cup 11 23
+      read -n 10 escolha
+
+      case $escolha in
+      1) desc_tar;;
+      2) desc_gz;;
+      3) desc_bz2;;
+      4) funcao1;;
+      *) tput cup 12 0; echo "#                        *Comando Inválido*"; read -n 1; escolha2_f1;;
+      esac
+      }
+
+      clear
+      echo "#######################################################################"
+      echo "#                                                                     #"
+      echo "#                Compactação/Descompactação de Arquivos               #"
+      echo "#                                                                     #"
+      echo "#---------------------------------------------------------------------#"
+      echo "#                                                                     #"
+      echo "#   1. Compactar Arquivo                                              #"
+      echo "#   2. Descompactar Arquivo                                           #"
       echo "#   3. Voltar                                                         #"
       echo "#                                                                     #"
       echo "#   Escolha uma Opção:                                                #"
@@ -37,15 +172,14 @@ main(){
       echo "#######################################################################"
 
       tput cup 10 23
-      echo -e "\c"
 
-      read -n10 escolha
+      read -n 10 escolha
 
       case $escolha in
       1)escolha1_f1;;
       2)escolha2_f1;;
       3)main;;
-      *)echo "#                         *Comando Inválido*"; read; funcao1;;
+      *)tput cup 11 0; echo "#                         *Comando Inválido*"; read -n 1; funcao1;;
       esac
    }
 
@@ -74,15 +208,14 @@ main(){
       echo "#######################################################################"
 
       tput cup 10 23
-      echo -e "\c"
 
-      read -n10 escolha
+      read -n 10 escolha
 
       case $escolha in
       1)escolha1_f2;;
       2)escolha2_f2;;
       3)main;;
-      *)echo "#                         *Comando Inválido*"; read; funcao2;;
+      *)tput cup 11 0; echo "#                         *Comando Inválido*"; read -n 1; funcao2;;
       esac
    }
 
@@ -111,15 +244,14 @@ main(){
       echo "#######################################################################"
 
       tput cup 10 23
-      echo -e "\c"
 
-      read -n10 escolha
+      read -n 10 escolha
 
       case $escolha in
       1)escolha1_f3;;
       2)escolha2_f3;;
       3)main;;
-      *)echo "#                         *Comando Inválido*"; read; funcao3;;
+      *)tput cup 11 0; echo "#                         *Comando Inválido*"; read -n 1; funcao3;;
       esac
    }
 
@@ -148,15 +280,14 @@ main(){
       echo "#######################################################################"
 
       tput cup 10 23
-      echo -e "\c"
 
-      read -n10 escolha
+      read -n 10 escolha
 
       case $escolha in
       1)escolha1_f4;;
       2)escolha2_f4;;
       3)main;;
-      *)echo "#                         *Comando Inválido*"; read; funcao4;;
+      *)tput cup 11 0; echo "#                         *Comando Inválido*"; read -n 1; funcao4;;
       esac
    }
 
@@ -168,7 +299,7 @@ main(){
    echo "#---------------------------------------------------------------------#"
    echo "# Professor: Luiz Fernando T. de Farias            Turma:  EIN 359-02 #"
    echo "# Equipe desenvolvedora:                                              #"
-   echo "#          Aluno:                                                     #"
+   echo "#          Aluno: Marcos Geovane Guimarães Filho                      #"
    echo "#          Aluno:                                                     #"
    echo "#          Aluno:                                                     #"
    echo "#          Aluno:                                                     #"
@@ -177,7 +308,7 @@ main(){
    echo "# Hora do Sistema: `date +%H` Horas e `date +%M` Minutos                              #"
    echo "#---------------------------------------------------------------------#"
    echo "# Menu de Escolhas:                                                   #"
-   echo "#        1) Função 1                                                  #"
+   echo "#        1) Compactação/Descompactação de Arquivos                    #"
    echo "#        2) Função 2                                                  #"
    echo "#        3) Função 3                                                  #"
    echo "#        4) Função 4                                                  #"
@@ -189,14 +320,10 @@ main(){
 
 #tput cup posiociona o ponteiro(area da digitação) na posição de X,Y 
 #X= Linha | Y= Coluna
-   tput cup 21 26
-   
-#parametro -e permite o uso de comandos com a barra inversa
-#\c serve para sobrescrever. ele irá sobrescrever a partir da area com espaço em branco na posição 21,26
-   echo -e "\c"
+   tput cup 21 28
 
 #-n<Numero> ele irá ler opção e aceitar até no maximo 10 caracteres
-   read -n10 opcao
+   read -n 10 opcao
 
 #Quando o usuario finalizar o script ele irá limpar a tela
    trap "clear" EXIT
@@ -206,8 +333,8 @@ main(){
    2) funcao2;;
    3) funcao3;;
    4) funcao4;;
-   5) return;;
-   *) echo "#                         *Comando Inválido*"; read; main;;
+   5) exit;;
+   *) tput cup 22 0; echo "#                         *Comando Inválido*"; read -n 1; main;;
    esac
 }
 main
