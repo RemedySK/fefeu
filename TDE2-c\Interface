@@ -413,7 +413,7 @@ main(){
    3) funcao3;;
    4) funcao4;;
    5) exit;;
-   *) tput cup 22 0; echo "#                         *Comando Inválido*"; read -n 1; main;;
+   *) tput cup 22 0; echo "#                         *Comando Inválido*";tput cup 21 28; echo "                    "; tput cup 21 28;  read -n 1; main;;
    esac
 }
 main
