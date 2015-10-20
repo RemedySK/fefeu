@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#v0.5.1 Com Interface
+#v0.5.9 Com Interface
 
 #Se a sua função tiver apenas 1 escolha,
 #Faça seu codigo dentro de funcaoX() { Seu código }.
@@ -13,9 +13,9 @@
 main(){
 
    funcao1(){
-      escolha1_f1(){         
-         comp_tar(){
-            clear
+      escolha1_f1(){  
+         caixa1(){
+         clear
             echo "###############################################################"
             echo "#                                                             #"
             echo "#   Digite onde está localizado o arquivo (Ex: /home/usuario) #"
@@ -25,36 +25,76 @@ main(){
             echo "#                                                             #"
             echo "#                                                             #"
             echo "###############################################################" 
-      
-           tput cup 3 4
-           read endereco
-
-           tput cup 6 4
-           read arqnome
+         }
+         comp_tar(){
+            caixa1          
            
-           cd $endereco 2> log_tde
+            tput cup 3 4
+            read endereco
+ 
+            tput cup 6 4
+            read arqnome
+ 
+            cd $endereco 2> log_tde
 
-           tar -cf $arqnome.tar $arqnome 2> log_tde
+            tar -cf $arqnome.tar $arqnome 2> log_tde
 
-           if [ $? == 0 ]; then
-              tput cup 7 0
-              echo "#                     *Arquivo compactado*"
-              sleep 3 ; funcao1
-           else
-              tput cup 7 0
-              echo "#               *Erro! Arquivo não foi compactado*"
-              rm $arqnome.tar 2> log_tde
-              sleep 3 ; funcao1
-           fi
-           main
+            if [ $? -eq 0 ]; then
+               tput cup 7 0
+               echo "#                     *Arquivo compactado*"
+               read -n 1 ; funcao1
+            else
+               tput cup 7 0
+               echo "#               *Erro! Arquivo não foi compactado*"
+               rm $arqnome.tar 2> log_tde
+               read -n 1; funcao1
+            fi
          }
 
          comp_gz(){
-         echo
+            caixa1          
+           
+            tput cup 3 4
+            read endereco
+
+            tput cup 6 4
+            read arqnome
+
+            cd $endereco 2> log_tde
+            tar -czf $arqnome.tar.gz $arqnome 2> /dev/null
+            if [ $? -eq 0 ]; then
+               echo "#                     *Arquivo compactado*"
+               read -n 1; funcao1
+            else
+               echo "#               *Erro! Arquivo não foi compactado*"
+               rm $arqnome.tar.gz 2> log_tde
+               read -n 1; funcao1
+            fi
          }
 
          comp_bz2(){
-         echo
+            caixa1          
+           
+            tput cup 3 4
+            read endereco
+ 
+            tput cup 6 4
+            read arqnome
+ 
+            cd $endereco 2> log_tde
+
+            tar -cjf $arqnome.tar.bz2 $arqnome 2> log_tde
+
+            if [ $? -eq 0 ]; then
+               tput cup 7 0
+               echo "#                     *Arquivo compactado*"
+               read -n 1 ; funcao1
+            else
+               tput cup 7 0
+               echo "#               *Erro! Arquivo não foi compactado*"
+               rm $arqnome.tar 2> log_tde
+               read -n 1; funcao1
+            fi
          }
 
             clear
@@ -64,10 +104,10 @@ main(){
             echo "#                                                                     #"
             echo "#---------------------------------------------------------------------#"
             echo "#                                                                     #"
-            echo "#   1. Compactar com .tar                                             #"
-            echo "#   2. Compactar e Comprimir com .tar.gz                              #"
-            echo "#   3. Compactar e Comprimir com .tar.bz2                             #"
-            echo "#   4. Voltar                                                         #"
+            echo "#   1) Compactar com .tar                                             #"
+            echo "#   2) Compactar e Comprimir com .tar.gz                              #"
+            echo "#   3) Compactar e Comprimir com .tar.bz2                             #"
+            echo "#   4) Voltar                                                         #"
             echo "#                                                                     #"
             echo "#   Escolha uma Opção:                                               #"
             echo "#                                                                     #"
@@ -86,18 +126,21 @@ main(){
          }
 
       escolha2_f1(){
-         desc_tar(){
+         caixa2(){
             clear
             echo "###############################################################"
             echo "#                                                             #"
             echo "#   Digite onde está localizado o arquivo (Ex: /home/usuario) #"
             echo "#                                                             #"
             echo "#                                                             #"
-            echo "#   Digite o nome do arquivo ( Ex: arquivo.tar )              #"
+            echo "#   Digite o nome do arquivo (Ex: arquivo.tar/tar.gz/tar.bz2) #"
             echo "#                                                             #"
             echo "#                                                             #"
-            echo "###############################################################" 
-            
+            echo "###############################################################"
+         }
+         desc_tar(){
+            caixa2
+
             tput cup 3 4
             read endereco
             
@@ -111,21 +154,57 @@ main(){
             if [ $? -eq 0 ]; then
                tput cup 7 0
                echo "#                     *Arquivo descompactado*"
-               sleep 3 ; funcao1
+               read -n 1; funcao1
             else
                tput cup 7 0
-               echo "#               *Erro! arquivo não foi descompactado*"
-               sleep 3 ; funcao1
+              read -n 1; funcao1
             fi
-            main
          }
 
          desc_gz(){
-         echo
+            caixa2
+
+            tput cup 3 4
+            read endereco
+            
+            tput cup 6 4
+            read arqnome
+
+            cd $endereco 2> log_tde
+               
+            tar -xzf $arqnome 2> log_tde
+
+            if [ $? -eq 0 ]; then
+               tput cup 7 0
+               echo "#                     *Arquivo descompactado*"
+               read -n 1; funcao1
+            else
+               tput cup 7 0
+               read -n 1; funcao1
+            fi
          }
 
          desc_bz2(){
-         echo
+            caixa2
+
+            tput cup 3 4
+            read endereco
+            
+            tput cup 6 4
+            read arqnome
+
+            cd $endereco 2> log_tde
+               
+            tar -xjf $arqnome 2> log_tde
+
+            if [ $? -eq 0 ]; then
+               tput cup 7 0
+               echo "#                     *Arquivo descompactado*"
+               read -n 1; funcao1
+            else
+               tput cup 7 0
+               read -n 1; funcao1
+            fi
          }
 
       clear
@@ -135,10 +214,10 @@ main(){
       echo "#                                                                     #"
       echo "#---------------------------------------------------------------------#"
       echo "#                                                                     #"
-      echo "#   1. Descompactar arquivos .tar                                     #"
-      echo "#   2. Descompactar e Descomprimir arquivos .tar.gz                   #"
-      echo "#   3. Descompactar e Descomprimir arquivos .tar.bz2                  #"
-      echo "#   4. Voltar                                                         #"
+      echo "#   1) Descompactar arquivos .tar                                     #"
+      echo "#   2) Descompactar e Descomprimir arquivos .tar.gz                   #"
+      echo "#   3) Descompactar e Descomprimir arquivos .tar.bz2                  #"
+      echo "#   4) Voltar                                                         #"
       echo "#                                                                     #"
       echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
@@ -163,9 +242,9 @@ main(){
       echo "#                                                                     #"
       echo "#---------------------------------------------------------------------#"
       echo "#                                                                     #"
-      echo "#   1. Compactar Arquivo                                              #"
-      echo "#   2. Descompactar Arquivo                                           #"
-      echo "#   3. Voltar                                                         #"
+      echo "#   1) Compactar Arquivo                                              #"
+      echo "#   2) Descompactar Arquivo                                           #"
+      echo "#   3) Voltar                                                         #"
       echo "#                                                                     #"
       echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
@@ -199,9 +278,9 @@ main(){
       echo "#                                                                     #"
       echo "#---------------------------------------------------------------------#"
       echo "#                                                                     #"
-      echo "#   1. Primeira Escolha                                               #"
-      echo "#   2. Segunda Escolha                                                #"
-      echo "#   3. Voltar                                                         #"
+      echo "#   1) Primeira Escolha                                               #"
+      echo "#   2) Segunda Escolha                                                #"
+      echo "#   3) Voltar                                                         #"
       echo "#                                                                     #"
       echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
@@ -235,9 +314,9 @@ main(){
       echo "#                                                                     #"
       echo "#---------------------------------------------------------------------#"
       echo "#                                                                     #"
-      echo "#   1. Primeira Escolha                                               #"
-      echo "#   2. Segunda Escolha                                                #"
-      echo "#   3. Voltar                                                         #"
+      echo "#   1) Primeira Escolha                                               #"
+      echo "#   2) Segunda Escolha                                                #"
+      echo "#   3) Voltar                                                         #"
       echo "#                                                                     #"
       echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
@@ -271,9 +350,9 @@ main(){
       echo "#                                                                     #"
       echo "#---------------------------------------------------------------------#"
       echo "#                                                                     #"
-      echo "#   1. Primeira Escolha                                               #"
-      echo "#   2. Segunda Escolha                                                #"
-      echo "#   3. Voltar                                                         #"
+      echo "#   1) Primeira Escolha                                               #"
+      echo "#   2) Segunda Escolha                                                #"
+      echo "#   3) Voltar                                                         #"
       echo "#                                                                     #"
       echo "#   Escolha uma Opção:                                                #"
       echo "#                                                                     #"
@@ -338,3 +417,4 @@ main(){
    esac
 }
 main
+
