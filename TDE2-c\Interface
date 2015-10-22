@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#v0.5.9 Com Interface
+#v0.6.1 Com Interface
 
 #Se a sua função tiver apenas 1 escolha,
 #Faça seu codigo dentro de funcaoX() { Seu código }.
@@ -25,75 +25,74 @@ main(){
             echo "#                                                             #"
             echo "#                                                             #"
             echo "###############################################################" 
-         }
-         comp_tar(){
-            caixa1          
            
             tput cup 3 4
+            
             read endereco
- 
-            tput cup 6 4
-            read arqnome
- 
-            cd $endereco 2> log_tde
+              
+            cd $endereco 2> ~/log_tde
 
-            tar -cf $arqnome.tar $arqnome 2> log_tde
+            if [ $? -eq 0 ]; then
+               tput cup 10 2
+               echo "Você possui os seguintes Arquivos/Diretorios neste caminho:"              
+               tput cup 12 0
+               ls
+            else
+               tput cup 7 0
+               echo "#                 *Erro! Diretório não encontrado*"
+               read -n 1; caixa1
+            fi
+
+            tput cup 6 4
+            read -n 57 arqnome
+         }
+         comp_tar(){
+            caixa1
+
+            tar -cf $arqnome.tar $arqnome 2> ~/log_tde
 
             if [ $? -eq 0 ]; then
                tput cup 7 0
-               echo "#                     *Arquivo compactado*"
+               echo "#                     *Arquivo Compactado*"
                read -n 1 ; funcao1
             else
                tput cup 7 0
-               echo "#               *Erro! Arquivo não foi compactado*"
-               rm $arqnome.tar 2> log_tde
-               read -n 1; funcao1
+               echo "#               *Erro! Arquivo não foi Compactado*"
+               rm $arqnome.tar 2> ~/log_tde
+               read -n 1; escolha1_f1
             fi
          }
 
          comp_gz(){
             caixa1          
-           
-            tput cup 3 4
-            read endereco
-
-            tput cup 6 4
-            read arqnome
-
-            cd $endereco 2> log_tde
-            tar -czf $arqnome.tar.gz $arqnome 2> /dev/null
+          
+            tar -czf $arqnome.tar.gz $arqnome 2> ~/log_tde
             if [ $? -eq 0 ]; then
-               echo "#                     *Arquivo compactado*"
+               tput cup 7 0
+               echo "#                     *Arquivo Compactado*"
                read -n 1; funcao1
             else
-               echo "#               *Erro! Arquivo não foi compactado*"
-               rm $arqnome.tar.gz 2> log_tde
-               read -n 1; funcao1
+               tput cup 7 0
+               echo "#               *Erro! Arquivo não foi Compactado*"
+               rm $arqnome.tar.gz 2> ~/log_tde
+               read -n 1; escolha1_f1
             fi
          }
 
          comp_bz2(){
             caixa1          
            
-            tput cup 3 4
-            read endereco
- 
-            tput cup 6 4
-            read arqnome
- 
-            cd $endereco 2> log_tde
-
-            tar -cjf $arqnome.tar.bz2 $arqnome 2> log_tde
+            tar -cjf $arqnome.tar.bz2 $arqnome 2> ~/log_tde
 
             if [ $? -eq 0 ]; then
                tput cup 7 0
-               echo "#                     *Arquivo compactado*"
+               echo "#                     *Arquivo Compactado*"
                read -n 1 ; funcao1
             else
                tput cup 7 0
-               echo "#               *Erro! Arquivo não foi compactado*"
-               rm $arqnome.tar 2> log_tde
-               read -n 1; funcao1
+               echo "#               *Erro! Arquivo não foi Compactado*"
+               rm $arqnome.tar 2> ~/log_tde
+               read -n 1; escolha1_f1
             fi
          }
 
@@ -109,19 +108,19 @@ main(){
             echo "#   3) Compactar e Comprimir com .tar.bz2                             #"
             echo "#   4) Voltar                                                         #"
             echo "#                                                                     #"
-            echo "#   Escolha uma Opção:                                               #"
+            echo "#   Escolha uma Opção:                                                #"
             echo "#                                                                     #"
             echo "#######################################################################"
        
             tput cup 11 23
-            read -n 10 escolha
+            read -n 1 escolha
 
             case $escolha in
             1) comp_tar;;
             2) comp_gz;;
             3) comp_bz2;;
             4) funcao1;;
-            *) tput cup 12 0; echo "#                        *Comando Inválido*"; read -n 1; escolha1_f1;;
+            *) tput cup 12 0; echo "#                        *Comando Inválido*"; tput cup 11 23; read -n 1; escolha1_f1;;
             esac
          }
 
@@ -137,73 +136,71 @@ main(){
             echo "#                                                             #"
             echo "#                                                             #"
             echo "###############################################################"
+
+            tput cup 3 4
+            read endereco
+ 
+            cd $endereco 2> ~/log_tde
+             
+            if [ $? -eq 0 ]; then
+               tput cup 10 2
+               echo "Você possui os seguintes Arquivos/Diretorios neste caminho:"
+               tput cup 12 0
+               ls | head
+            else
+               tput cup 7 0
+               echo "#                 *Erro! Diretório não encontrado*"
+               read -n 1; caixa2
+            fi
+            
+            tput cup 6 4
+            read -n 57 arqnome
          }
          desc_tar(){
             caixa2
 
-            tput cup 3 4
-            read endereco
-            
-            tput cup 6 4
-            read arqnome
-
-            cd $endereco 2> log_tde
-               
-            tar -xf $arqnome 2> log_tde
+            tar -xf $arqnome 2> ~/log_tde
 
             if [ $? -eq 0 ]; then
                tput cup 7 0
-               echo "#                     *Arquivo descompactado*"
+               echo "#                     *Arquivo Descompactado*"
                read -n 1; funcao1
             else
                tput cup 7 0
-              read -n 1; funcao1
+               echo "#               *Erro! Arquivo não foi Descompactado*"
+               read -n 1; escolha2_f1
             fi
          }
 
          desc_gz(){
             caixa2
 
-            tput cup 3 4
-            read endereco
-            
-            tput cup 6 4
-            read arqnome
-
-            cd $endereco 2> log_tde
-               
             tar -xzf $arqnome 2> log_tde
 
             if [ $? -eq 0 ]; then
                tput cup 7 0
-               echo "#                     *Arquivo descompactado*"
+               echo "#                     *Arquivo Descompactado*"
                read -n 1; funcao1
             else
                tput cup 7 0
-               read -n 1; funcao1
+               echo "#               *Erro! Arquivo não foi Descompactado*"
+               read -n 1; escolha2_f1
             fi
          }
 
          desc_bz2(){
             caixa2
-
-            tput cup 3 4
-            read endereco
-            
-            tput cup 6 4
-            read arqnome
-
-            cd $endereco 2> log_tde
                
             tar -xjf $arqnome 2> log_tde
 
             if [ $? -eq 0 ]; then
                tput cup 7 0
-               echo "#                     *Arquivo descompactado*"
+               echo "#                     *Arquivo Descompactado*"
                read -n 1; funcao1
             else
                tput cup 7 0
-               read -n 1; funcao1
+               echo "#               *Erro! Arquivo não foi Descompactado*"
+               read -n 1; escolha2_f1
             fi
          }
 
@@ -224,14 +221,14 @@ main(){
       echo "#######################################################################"
        
       tput cup 11 23
-      read -n 10 escolha
+      read -n 1 escolha
 
       case $escolha in
       1) desc_tar;;
       2) desc_gz;;
       3) desc_bz2;;
       4) funcao1;;
-      *) tput cup 12 0; echo "#                        *Comando Inválido*"; read -n 1; escolha2_f1;;
+      *) tput cup 12 0; echo "#                        *Comando Inválido*"; tput cup 11 23; read -n 1; escolha2_f1;;
       esac
       }
 
@@ -252,13 +249,13 @@ main(){
 
       tput cup 10 23
 
-      read -n 10 escolha
+      read -n 1 escolha
 
       case $escolha in
       1)escolha1_f1;;
       2)escolha2_f1;;
       3)main;;
-      *)tput cup 11 0; echo "#                         *Comando Inválido*"; read -n 1; funcao1;;
+      *)tput cup 11 0; echo "#                         *Comando Inválido*"; tput cup 10 23; read -n 1; funcao1;;
       esac
    }
 
@@ -288,13 +285,13 @@ main(){
 
       tput cup 10 23
 
-      read -n 10 escolha
+      read -n 1 escolha
 
       case $escolha in
       1)escolha1_f2;;
       2)escolha2_f2;;
       3)main;;
-      *)tput cup 11 0; echo "#                         *Comando Inválido*"; read -n 1; funcao2;;
+      *)tput cup 11 0; echo "#                         *Comando Inválido*"; tput cup 10 23; read -n 1; funcao2;;
       esac
    }
 
@@ -324,13 +321,13 @@ main(){
 
       tput cup 10 23
 
-      read -n 10 escolha
+      read -n 1 escolha
 
       case $escolha in
       1)escolha1_f3;;
       2)escolha2_f3;;
       3)main;;
-      *)tput cup 11 0; echo "#                         *Comando Inválido*"; read -n 1; funcao3;;
+      *)tput cup 11 0; echo "#                         *Comando Inválido*"; tput cup 10 23; read -n 1; funcao3;;
       esac
    }
 
@@ -360,17 +357,18 @@ main(){
 
       tput cup 10 23
 
-      read -n 10 escolha
+      read -n 1 escolha
 
       case $escolha in
       1)escolha1_f4;;
       2)escolha2_f4;;
       3)main;;
-      *)tput cup 11 0; echo "#                         *Comando Inválido*"; read -n 1; funcao4;;
+      *)tput cup 11 0; echo "#                         *Comando Inválido*"; tput cup 21 28; read -n 1; funcao4;;
       esac
    }
-
+   
    clear
+   trap "clear" EXIT
    echo "#######################################################################"
    echo "#                                                                     #"
    echo "# UNIGRANRIO - Universidade do Grande Rio                             #"
@@ -379,9 +377,9 @@ main(){
    echo "# Professor: Luiz Fernando T. de Farias            Turma:  EIN 359-02 #"
    echo "# Equipe desenvolvedora:                                              #"
    echo "#          Aluno: Marcos Geovane Guimarães Filho                      #"
-   echo "#          Aluno:                                                     #"
-   echo "#          Aluno:                                                     #"
-   echo "#          Aluno:                                                     #"
+   echo "#          Aluno: Rafael Peixoto Lourenço                             #"
+   echo "#          Aluno: Victor Eduardo Drumond Firmo Ribeiro                #"
+   echo "#          Aluno: Estella Batista Americo                             #"
    echo "#---------------------------------------------------------------------#"
    echo "# Rio de Janeiro,  `date +%d` de `date +%B` de `date +%Y`                              #"
    echo "# Hora do Sistema: `date +%H` Horas e `date +%M` Minutos                              #"
@@ -396,16 +394,9 @@ main(){
    echo "#        Escolha uma opção:                                           #"
    echo "#                                                                     #"  
    echo "#######################################################################"
-
-#tput cup posiociona o ponteiro(area da digitação) na posição de X,Y 
-#X= Linha | Y= Coluna
    tput cup 21 28
 
-#-n<Numero> ele irá ler opção e aceitar até no maximo 10 caracteres
-   read -n 10 opcao
-
-#Quando o usuario finalizar o script ele irá limpar a tela
-   trap "clear" EXIT
+   read -n 1 opcao
    
    case $opcao in
    1) funcao1;;
@@ -413,7 +404,7 @@ main(){
    3) funcao3;;
    4) funcao4;;
    5) exit;;
-   *) tput cup 22 0; echo "#                         *Comando Inválido*";tput cup 21 28; echo "                    "; tput cup 21 28;  read -n 1; main;;
+   *) tput cup 22 0; echo "#                         *Comando Inválido*"; tput cup 21 28; read -n 1; main;;
    esac
 }
 main
